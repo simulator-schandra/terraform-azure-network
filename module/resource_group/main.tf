@@ -5,6 +5,7 @@ resource "azurerm_resource_group" "resource_group" {
   tags = merge(
     {
         Name = var.rg_name
+        Provisioner = "Terraform"
     },
     var.tags
   )

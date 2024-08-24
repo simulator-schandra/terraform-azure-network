@@ -17,3 +17,7 @@ variable "vnet_location" {
 variable "tags" {
   type = map(string)
 }
+
+variable "vnet_dns_servers" {
+  type = list(string)
+}

@@ -10,8 +10,8 @@ module "rg" {
 module "vnet" {
     source = "./module/virtual_network"
     vnet_name = "simulator-vnet"
-    vnet_location = module.rg.location
-    rg_name = module.rg.rg_name
+    vnet_location = "South India"
+    rg_name = "simulator-rg"
     vnet_address_space = ["10.0.0.0/16"]
     tags = {
       "Environment" = "Staging"
