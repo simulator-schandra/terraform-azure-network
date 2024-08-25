@@ -21,3 +21,8 @@ variable "tags" {
 variable "vnet_dns_servers" {
   type = list(string)
 }
+
+variable "vnet_subnet" {
+  type = map(string)
+  default = []
+}

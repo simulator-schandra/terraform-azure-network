@@ -3,12 +3,13 @@ resource "azurerm_virtual_network" "virtual_network" {
   location            = var.vnet_location
   resource_group_name = var.rg_name
   address_space       = var.vnet_address_space
-  dns_servers = var.vnet_dns_servers
+  dns_servers         = var.vnet_dns_servers
+  subnet              = var.vnet_subnet
 
   tags = merge(
     {
-        Name = var.vnet_name
-        Provisioner = "Terraform"
+      Name        = var.vnet_name
+      Provisioner = "Terraform"
     },
     var.tags
   )
