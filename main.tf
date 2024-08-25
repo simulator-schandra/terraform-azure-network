@@ -24,7 +24,7 @@ module "public_subnet" {
   source                          = "./module/subnet"
   subnet_name                     = ["simulator-sub-pub-1", "simulator-sub-pub-2"]
   rg_name                         = "simulator-rg"
-  vnet_name                       = "South India"
+  vnet_name                       = "simulator-vnet"
   subnet_cidr                     = [["10.0.0.0/23"], ["10.0.2.0/23"]]
   default_outbound_access_enabled = true
   depends_on                      = [module.vnet]
@@ -34,7 +34,7 @@ module "private_subnet" {
   source      = "./module/subnet"
   subnet_name = ["simulator-sub-pvt-1", "simulator-sub-pvt-2"]
   rg_name     = "simulator-rg"
-  vnet_name   = "South India"
+  vnet_name   = "simulator-vnet"
   subnet_cidr = [["10.0.4.0/23"], ["10.0.6.0/23"]]
   depends_on  = [module.vnet]
 }
