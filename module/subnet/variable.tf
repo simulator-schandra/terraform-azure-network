@@ -13,7 +13,7 @@ variable "default_outbound_access_enabled" {
   default = false
 }
 
-variable "subnet_list" {
+variable "subnet_name" {
   type = list(string)
 }
 
