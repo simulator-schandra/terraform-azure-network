@@ -20,6 +20,7 @@ variable "tags" {
 
 variable "vnet_dns_servers" {
   type = list(string)
+  default = []
 }
 
 variable "vnet_subnet" {
