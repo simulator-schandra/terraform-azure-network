@@ -46,25 +46,14 @@ module "nsg" {
   rg_name = "simulator-rg"
   nsg_rule = [
     {
-      name                       = "test123"
+      name                       = "ssh_access_rule"
       priority                   = 100
       direction                  = "Inbound"
       access                     = "Allow"
       protocol                   = "Tcp"
-      source_port_range          = "*"
-      destination_port_range     = "*"
-      source_address_prefix      = "*"
-      destination_address_prefix = "*"
-    },
-    {
-      name                       = "test123"
-      priority                   = 101
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "*"
-      destination_port_range     = "*"
-      source_address_prefix      = "*"
+      source_port_range          = "22"
+      destination_port_range     = "22"
+      source_address_prefix      = "0.0.0.0/0"
       destination_address_prefix = "*"
     }
   ]
