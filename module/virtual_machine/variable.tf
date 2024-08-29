@@ -46,10 +46,6 @@ variable "tags" {
   type = map(string)
 }
 
-variable "vm_availability_zone" {
-  type = string
-}
-
 variable "source_image_offer" {
   type = string
 }

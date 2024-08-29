@@ -28,7 +28,6 @@ resource "azurerm_linux_virtual_machine" "virtual_machine" {
     azurerm_network_interface.network_interface.id,
   ]
   priority = var.vm_priority
-  zone     = var.vm_availability_zone
 
   admin_ssh_key {
     username   = var.admin_username
