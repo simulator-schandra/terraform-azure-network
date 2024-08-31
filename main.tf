@@ -91,9 +91,9 @@ module "private_subnet" {
 #       direction                  = "Inbound"
 #       access                     = "Allow"
 #       protocol                   = "Tcp"
-#       source_port_range          = "22"
+#       source_port_range          = "*"
 #       destination_port_range     = "22"
-#       source_address_prefix      = "0.0.0.0/0"
+#       source_address_prefix      = "*"
 #       destination_address_prefix = "*"
 #     }
 #   ]
