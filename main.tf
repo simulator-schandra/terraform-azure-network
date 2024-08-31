@@ -7,8 +7,6 @@ module "vnet" {
   tags = {
     "Environment" = "Staging"
   }
-  depends_on = [module.rg]
-
 }
 
 module "public_subnet" {
