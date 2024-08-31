@@ -9,41 +9,6 @@ module "vnet" {
   }
 }
 
-module "nat" {
-  source            = "./module/nat_gateway"
-  nat_name          = "simulator-nat"
-  rg_name           = "simulator-rg"
-  nat_location      = "South India"
-  create_pip_prefix = false
-  tags = {
-    "Environment" = "Staging"
-  }
-  depends_on = [module.vnet]
-}
-
-module "pvt_rt" {
-  source      = "./module/route_table"
-  rt_name     = "simulator-pvt-rt"
-  rt_location = "South India"
-  rg_name     = "simulator-rg"
-  rt_route = [
-    {
-      name           = "route1"
-      address_prefix = "10.0.0.0/20"
-      next_hop_type  = "VnetLocal"
-    },
-    {
-      name           = "route2"
-      address_prefix = "10.0.0.0/20"
-      next_hop_type  = "Internet"
-    }
-  ]
-  tags = {
-    "Environment" = "Staging"
-  }
-  depends_on = [module.vnet]
-}
-
 module "public_subnet" {
   source                          = "./module/subnet"
   subnet_name                     = ["simulator-sub-pub-1", "simulator-sub-pub-2"]
@@ -51,7 +16,7 @@ module "public_subnet" {
   vnet_name                       = "simulator-vnet"
   subnet_cidr                     = [["10.0.0.0/23"], ["10.0.2.0/23"]]
   default_outbound_access_enabled = true
-  depends_on                      = [module.nat]
+  depends_on                      = [module.vnet]
 }
 
 module "private_subnet" {
@@ -60,22 +25,57 @@ module "private_subnet" {
   rg_name     = "simulator-rg"
   vnet_name   = "simulator-vnet"
   subnet_cidr = [["10.0.4.0/23"], ["10.0.6.0/23"]]
-  depends_on  = [module.nat]
+  depends_on  = [module.vnet]
 }
 
-resource "azurerm_subnet_nat_gateway_association" "subnet_nat_gateway_association" {
-  count          = length([["10.0.4.0/23"], ["10.0.6.0/23"]])
-  subnet_id      = module.private_subnet.subnet_ids[count.index]
-  nat_gateway_id = module.nat.nat_id
-  depends_on     = [module.private_subnet]
-}
+# module "nat" {
+#   source            = "./module/nat_gateway"
+#   nat_name          = "simulator-nat"
+#   rg_name           = "simulator-rg"
+#   nat_location      = "South India"
+#   create_pip_prefix = false
+#   tags = {
+#     "Environment" = "Staging"
+#   }
+#   depends_on = [module.private_subnet]
+# }
 
-resource "azurerm_subnet_route_table_association" "example" {
-  count          = length([["10.0.4.0/23"], ["10.0.6.0/23"]])
-  subnet_id      = module.private_subnet.subnet_ids[count.index]
-  route_table_id = module.pvt_rt.rt_id
-  depends_on     = [module.private_subnet]
-}
+# resource "azurerm_subnet_nat_gateway_association" "subnet_nat_gateway_association" {
+#   count          = length([["10.0.4.0/23"], ["10.0.6.0/23"]])
+#   subnet_id      = module.private_subnet.subnet_ids[count.index]
+#   nat_gateway_id = module.nat.nat_id
+#   depends_on     = [module.nat]
+# }
+
+# module "pvt_rt" {
+#   source      = "./module/route_table"
+#   rt_name     = "simulator-pvt-rt"
+#   rt_location = "South India"
+#   rg_name     = "simulator-rg"
+#   rt_route = [
+#     {
+#       name           = "route1"
+#       address_prefix = "10.0.0.0/20"
+#       next_hop_type  = "VnetLocal"
+#     },
+#     {
+#       name           = "route2"
+#       address_prefix = "10.0.0.0/20"
+#       next_hop_type  = "Internet"
+#     }
+#   ]
+#   tags = {
+#     "Environment" = "Staging"
+#   }
+#   depends_on = [module.vnet]
+# }
+
+# resource "azurerm_subnet_route_table_association" "subnet_route_table_association" {
+#   count          = length([["10.0.4.0/23"], ["10.0.6.0/23"]])
+#   subnet_id      = module.private_subnet.subnet_ids[count.index]
+#   route_table_id = module.pvt_rt.rt_id
+#   depends_on     = [module.private_subnet]
+# }
 
 
 
