@@ -1,7 +1,7 @@
 resource "azurerm_public_ip_prefix" "public_ip_prefix" {
   count               = var.create_pip_prefix == true ? 1 : 0
   name                = "${var.nat_name}-pip-prefix"
-  location            = var.rg_location
+  location            = var.nat_location
   resource_group_name = var.rg_name
   sku                 = var.sku_name
   ip_version          = var.ip_version
@@ -19,7 +19,7 @@ resource "azurerm_public_ip_prefix" "public_ip_prefix" {
 resource "azurerm_public_ip" "public_ip" {
   name                = "${var.nat_name}-pip"
   resource_group_name = var.rg_name
-  location            = var.rg_location
+  location            = var.nat_location
   allocation_method   = var.allocation_method
   ip_version          = var.ip_version
   public_ip_prefix_id = var.create_pip_prefix == true ? azurerm_public_ip_prefix.public_ip_prefi[0].id : null
@@ -37,7 +37,7 @@ resource "azurerm_public_ip" "public_ip" {
 
 resource "azurerm_nat_gateway" "nat_gateway" {
   name                = var.nat_name
-  location            = var.rg_location
+  location            = var.nat_location
   resource_group_name = var.rg_name
   sku_name            = var.sku_name
 

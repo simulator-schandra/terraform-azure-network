@@ -30,6 +30,18 @@ module "private_subnet" {
   depends_on  = [module.vnet]
 }
 
+module "nat" {
+  source            = "./module/nat_gateway"
+  nat_name          = "simulator-nat"
+  rg_name           = "simulator-rg"
+  nat_location      = "South India"
+  create_pip_prefix = false
+  tags = {
+    "Environment" = "Staging"
+  }
+  depends_on = [module.private_subnet]
+}
+
 # module "nsg" {
 #   source = "./module/network_security_group"
 #   nsg_name = "simulator-nsg"
@@ -51,7 +63,7 @@ module "private_subnet" {
 #   tags = {
 #     "Environment" = "Staging"
 #   }
-  
+
 # }
 
 # module "vm" {
