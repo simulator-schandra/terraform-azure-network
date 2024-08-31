@@ -41,7 +41,7 @@ module "pvt_rt" {
   tags = {
     "Environment" = "Staging"
   }
-  depends_on = [ module.vnet ]
+  depends_on = [module.vnet]
 }
 
 module "public_subnet" {
@@ -67,7 +67,14 @@ resource "azurerm_subnet_nat_gateway_association" "subnet_nat_gateway_associatio
   count          = length([["10.0.4.0/23"], ["10.0.6.0/23"]])
   subnet_id      = module.private_subnet.subnet_ids[count.index]
   nat_gateway_id = module.nat.nat_id
-  depends_on = [ module.private_subnet ]
+  depends_on     = [module.private_subnet]
+}
+
+resource "azurerm_subnet_route_table_association" "example" {
+  count          = length([["10.0.4.0/23"], ["10.0.6.0/23"]])
+  subnet_id      = module.private_subnet.subnet_ids[count.index]
+  route_table_id = module.pvt_rt.rt_id
+  depends_on     = [module.private_subnet]
 }
 
 
