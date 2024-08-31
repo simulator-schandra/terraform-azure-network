@@ -40,6 +40,12 @@ module "nat" {
   depends_on = [module.private_subnet]
 }
 
+resource "azurerm_subnet_nat_gateway_association" "subnet_nat_gateway_association" {
+  count = length([["10.0.4.0/23"], ["10.0.6.0/23"]])
+  subnet_id      = module.private_subnet.subnet_ids[count.index]
+  nat_gateway_id = module.nat.nat_id
+}
+
 # module "nsg" {
 #   source = "./module/network_security_group"
 #   nsg_name = "simulator-nsg"
