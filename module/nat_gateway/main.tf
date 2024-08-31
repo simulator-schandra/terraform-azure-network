@@ -22,7 +22,7 @@ resource "azurerm_public_ip" "public_ip" {
   location            = var.nat_location
   allocation_method   = var.allocation_method
   ip_version          = var.ip_version
-  public_ip_prefix_id = var.create_pip_prefix == true ? azurerm_public_ip_prefix.public_ip_prefi[0].id : null
+  public_ip_prefix_id = var.create_pip_prefix == true ? azurerm_public_ip_prefix.public_ip_prefix[0].id : null
   sku                 = var.sku_name
   sku_tier            = var.sku_tier
 
@@ -58,5 +58,5 @@ resource "azurerm_nat_gateway_public_ip_association" "nat_gateway_public_ip_asso
 resource "azurerm_nat_gateway_public_ip_prefix_association" "nat_gateway_public_ip_prefix_association" {
   count               = var.create_pip_prefix == true ? 1 : 0
   nat_gateway_id      = azurerm_nat_gateway.nat_gateway.id
-  public_ip_prefix_id = azurerm_public_ip_prefix.public_ip_prefix.id
+  public_ip_prefix_id = azurerm_public_ip_prefix.public_ip_prefix[0].id
 }
