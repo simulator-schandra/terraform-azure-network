@@ -41,9 +41,31 @@ module "nat" {
 }
 
 resource "azurerm_subnet_nat_gateway_association" "subnet_nat_gateway_association" {
-  count = length([["10.0.4.0/23"], ["10.0.6.0/23"]])
+  count          = length([["10.0.4.0/23"], ["10.0.6.0/23"]])
   subnet_id      = module.private_subnet.subnet_ids[count.index]
   nat_gateway_id = module.nat.nat_id
+}
+
+module "pvt_rt" {
+  source      = "./module/route_table"
+  rt_name     = "simulator-pvt-rt"
+  rt_location = "South India"
+  rg_name     = "simulator-rg"
+  rt_route = [
+    {
+      name           = "route1"
+      address_prefix = "10.0.0.0/20"
+      next_hop_type  = "VnetLocal"
+    },
+    {
+      name           = "route2"
+      address_prefix = "10.0.0.0/20"
+      next_hop_type  = "Internet"
+    }
+  ]
+  tags = {
+    "Environment" = "Staging"
+  }
 }
 
 # module "nsg" {
