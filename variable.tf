@@ -1,50 +1,50 @@
-# ######## RG Variable ##############
+######## RG Variable ##############
 
-# variable "rg_name" {
-#   type = string
-# }
+variable "rg_name" {
+  type = string
+}
 
-# variable "rg_location" {
-#   type = string
-# }
+variable "rg_location" {
+  type = string
+}
 
-# variable "network_tags" {
-#   type = map(string)
-# }
+variable "network_tags" {
+  type = map(string)
+}
 
-# ######## Vnet Variable ##############
+######## Vnet Variable ##############
 
-# variable "vnet_name" {
-#   type = string
-# }
+variable "vnet_name" {
+  type = string
+}
 
-# variable "vnet_address_space" {
-#   type = list(string)
-# }
+variable "vnet_address_space" {
+  type = list(string)
+}
 
-# ######## Subnet Variable ##############
+######## Subnet Variable ##############
 
-# variable "pub_subnet_name" {
-#   type = list(string)
-# }
+variable "pub_subnet_name" {
+  type = list(string)
+}
 
-# variable "pub_subnet_cidr" {
-#   type = list(string)
-# }
+variable "pub_subnet_cidr" {
+  type = list(list(string))
+}
 
-# variable "pvt_subnet_name" {
-#   type = list(string)
-# }
+variable "pvt_subnet_name" {
+  type = list(string)
+}
 
-# variable "pvt_subnet_cidr" {
-#   type = list(string)
-# }
+variable "pvt_subnet_cidr" {
+  type = list(list(string))
+}
 
-# ######## NAT Variable ##############
+######## NAT Variable ##############
 
-# variable "nat_name" {
-#   type = string
-# }
+variable "nat_name" {
+  type = string
+}
 
 
 
