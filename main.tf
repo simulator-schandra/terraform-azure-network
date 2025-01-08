@@ -1,5 +1,16 @@
+module "rg" {
+  source  = "simulator-schandra/rg/azure"
+  version = "0.0.2"
+  rg_name     = "simulator-rg"
+  rg_location = "South India"
+  tags = {
+    "Environment" = "Staging"
+  }
+}
+
 module "vnet" {
-  source             = "./module/virtual_network"
+  source             = "simulator-schandra/vnet/azure"
+  version            = "0.0.2"
   vnet_name          = "simulator-vnet"
   vnet_location      = "South India"
   rg_name            = "simulator-rg"
@@ -7,10 +18,12 @@ module "vnet" {
   tags = {
     "Environment" = "Staging"
   }
+  depends_on = [module.rg]
 }
 
 module "public_subnet" {
-  source                          = "./module/subnet"
+  source                          = "simulator-schandra/subnet/azure"
+  version                         = "0.0.2"
   subnet_name                     = ["simulator-sub-pub-1", "simulator-sub-pub-2"]
   rg_name                         = "simulator-rg"
   vnet_name                       = "simulator-vnet"
@@ -20,7 +33,8 @@ module "public_subnet" {
 }
 
 module "private_subnet" {
-  source      = "./module/subnet"
+  source      = "simulator-schandra/subnet/azure"
+  version     = "0.0.2"
   subnet_name = ["simulator-sub-pvt-1", "simulator-sub-pvt-2"]
   rg_name     = "simulator-rg"
   vnet_name   = "simulator-vnet"
@@ -29,7 +43,8 @@ module "private_subnet" {
 }
 
 module "nat" {
-  source            = "./module/nat_gateway"
+  source            = "simulator-schandra/nat/azure"
+  version           = "0.0.2"
   nat_name          = "simulator-nat"
   rg_name           = "simulator-rg"
   nat_location      = "South India"
