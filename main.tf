@@ -39,6 +39,7 @@ module "private_subnet" {
 }
 
 module "nat" {
+  count             = var.create_nat == true ? 1 : null
   source            = "simulator-schandra/nat/azure"
   version           = "0.0.2"
   nat_name          = var.nat_name
@@ -50,7 +51,7 @@ module "nat" {
 }
 
 resource "azurerm_subnet_nat_gateway_association" "subnet_nat_gateway_association" {
-  count          = length(var.pvt_subnet_cidr)
+  count          = var.create_nat == true ? length(var.pvt_subnet_cidr) : null
   subnet_id      = module.private_subnet.subnet_ids[count.index]
   nat_gateway_id = module.nat.nat_id
   depends_on     = [module.nat]

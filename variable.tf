@@ -46,6 +46,10 @@ variable "nat_name" {
   type = string
 }
 
+variable "create_nat" {
+  type = bool
+  default = true
+}
 
 
 
